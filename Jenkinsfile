@@ -8,15 +8,16 @@ pipeline {
 
     environment {
         COMPOSER_ALLOW_SUPERUSER = "1"
-        SONAR_HOST_URL = 'http://docker.sonar:9000'
-        SONAR_TOKEN = 'squ_f8db1b0d99540505f8c71a9ee7d39b663e75e6d9'
     }
 
     stages {
         stage('Clone') {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    git branch: 'main', credentialsId: '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', url: 'https://github.com/TheReeds/capachica-project.git'
+                    deleteDir()
+                    git branch: 'main',
+                        credentialsId: 'github-token',
+                        url: 'https://github.com/TheReeds/capachica-project.git'
                 }
             }
         }
@@ -63,7 +64,7 @@ pipeline {
                 dir('turismo-backend') {
                     timeout(time: 5, unit: 'MINUTES') {
                         withSonarQubeEnv('sonarqube') {
-                            sh '''
+                            sh """
                                 sonar-scanner \
                                   -Dsonar.projectKey=turismo-backend \
                                   -Dsonar.projectName=turismo-backend \
@@ -78,10 +79,8 @@ pipeline {
                                   -Dsonar.php.file.suffixes=php \
                                   -Dsonar.duplicatedBlocks.minimumTokens=50 \
                                   -Dsonar.coverage.exclusions=**/tests/**,**/database/**,**/config/** \
-                                  -Dsonar.cpd.exclusions=**/tests/**,**/database/migrations/** \
-                                  -Dsonar.host.url=$SONAR_HOST_URL \
-                                  -Dsonar.login=$SONAR_TOKEN
-                            '''
+                                  -Dsonar.cpd.exclusions=**/tests/**,**/database/migrations/**
+                            """
                         }
                     }
                 }
