@@ -1,13 +1,16 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'php:8.2-cli'
+            args '-u root'
+        }
+    }
 
     environment {
         COMPOSER_ALLOW_SUPERUSER = "1"
         SONAR_HOST_URL = 'http://docker.sonar:9000'
         SONAR_TOKEN = 'squ_f8db1b0d99540505f8c71a9ee7d39b663e75e6d9'
     }
-
-
 
     stages {
         stage('Clone') {
@@ -18,13 +21,23 @@ pipeline {
             }
         }
 
+        stage('Prepare Environment') {
+            steps {
+                sh '''
+                    apt-get update && apt-get install -y unzip git curl zip libzip-dev php-mbstring php-xml php-curl php-mysql php-pgsql
+                    curl -sS https://getcomposer.org/installer | php
+                    mv composer.phar /usr/local/bin/composer
+                    php -r "copy('.env.example', '.env');"
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 dir('turismo-backend') {
                     timeout(time: 5, unit: 'MINUTES') {
                         sh '''
                             composer install
-                            cp .env.example .env
                             php artisan key:generate
                         '''
                     }
