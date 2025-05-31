@@ -17,7 +17,7 @@ pipeline {
         stage('Clone') {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    git branch: 'main', credentialsId: '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', url: 'https://github.com/TheReeds/capachica-project.git'
+                    git branch: 'main', credentialsId: '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', url: 'https://github.com/TheReeds/capachica-project.git'
                 }
             }
         }
