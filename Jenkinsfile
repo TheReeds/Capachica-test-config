@@ -9,8 +9,8 @@ pipeline {
 
     tools {
         // Si Jenkins tiene PHP o Composer como herramientas configuradas, puedes agregarlas aquí
-        // php "PHP_8"
-        // composer "Composer"
+        php "PHP_8"
+        composer "Composer"
     }
 
     stages {
