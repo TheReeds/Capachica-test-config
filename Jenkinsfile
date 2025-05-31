@@ -7,11 +7,7 @@ pipeline {
         SONAR_TOKEN = 'squ_f8db1b0d99540505f8c71a9ee7d39b663e75e6d9'
     }
 
-    tools {
-        // Si Jenkins tiene PHP o Composer como herramientas configuradas, puedes agregarlas aquí
-        php "PHP_8"
-        composer "Composer"
-    }
+
 
     stages {
         stage('Clone') {
