@@ -42,9 +42,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('turismo-backend') {
-                    timeout(time: 15, unit: 'MINUTES') {
+                    timeout(time: 25, unit: 'MINUTES') {
                         sh '''
-                            COMPOSER_PROCESS_TIMEOUT=1200 composer install --no-interaction --prefer-dist --optimize-autoloader
+                            COMPOSER_PROCESS_TIMEOUT=1600 composer install --no-interaction --prefer-dist --optimize-autoloader
                             php artisan key:generate
                         '''
                     }
