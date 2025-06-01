@@ -25,7 +25,8 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 sh '''
-                    apt-get update && apt-get install -y unzip git curl zip libzip-dev php-mbstring php-xml php-curl php-mysql php-pgsql
+                    apt-get update && apt-get install -y unzip git curl zip libzip-dev \
+                        php8.2-mbstring php8.2-xml php8.2-curl php8.2-mysql php8.2-pgsql
                     curl -sS https://getcomposer.org/installer | php
                     mv composer.phar /usr/local/bin/composer
                     php -r "copy('.env.example', '.env');"
