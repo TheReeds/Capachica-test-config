@@ -44,7 +44,7 @@ pipeline {
                 dir('turismo-backend') {
                     timeout(time: 15, unit: 'MINUTES') {
                         sh '''
-                            COMPOSER_PROCESS_TIMEOUT=600 composer install --no-interaction --prefer-dist --optimize-autoloader
+                            COMPOSER_PROCESS_TIMEOUT=1200 composer install --no-interaction --prefer-dist --optimize-autoloader
                             php artisan key:generate
                         '''
                     }
