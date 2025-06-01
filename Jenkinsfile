@@ -44,13 +44,14 @@ pipeline {
                 dir('turismo-backend') {
                     timeout(time: 15, unit: 'MINUTES') {
                         sh '''
-                            composer install
+                            COMPOSER_PROCESS_TIMEOUT=600 composer install --no-interaction --prefer-dist --optimize-autoloader
                             php artisan key:generate
                         '''
                     }
                 }
             }
         }
+
 
         stage('Run Tests') {
             steps {
