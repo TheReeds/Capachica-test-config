@@ -42,7 +42,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('turismo-backend') {
-                    timeout(time: 5, unit: 'MINUTES') {
+                    timeout(time: 15, unit: 'MINUTES') {
                         sh '''
                             composer install
                             php artisan key:generate
